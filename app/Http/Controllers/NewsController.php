@@ -9,46 +9,13 @@ class NewsController extends Controller
 {
     public function index()
     {
-        return News::all();
-    }
+        $news = News::all();
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title' => ['required'],
-            'date' => ['required', 'date'],
-            'description' => ['nullable'],
-            'photo' => ['nullable'],
-            'links' => ['nullable'],
-        ]);
-
-        return News::create($data);
+        return view('news.index', compact('news'));
     }
 
     public function show(News $news)
     {
-        return $news;
-    }
-
-    public function update(Request $request, News $news)
-    {
-        $data = $request->validate([
-            'title' => ['required'],
-            'date' => ['required', 'date'],
-            'description' => ['nullable'],
-            'photo' => ['nullable'],
-            'links' => ['nullable'],
-        ]);
-
-        $news->update($data);
-
-        return $news;
-    }
-
-    public function destroy(News $news)
-    {
-        $news->delete();
-
-        return response()->json();
+        return view('news.show', compact('news'));
     }
 }

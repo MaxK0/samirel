@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -24,5 +25,15 @@ class Product extends Model
         return [
             'weight' => 'float',
         ];
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductTag::class, 'product_tags');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(CategoryProduct::class, 'category_products');
     }
 }
