@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -21,6 +23,10 @@ class ProductResource extends Resource
 
     protected static ?string $slug = 'products';
 
+    protected static ?string $navigationLabel = 'Товары';
+    protected static ?string $pluralLabel = 'Товары';
+    protected static ?string $label = 'Товары';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -28,37 +34,63 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Название')
                     ->required(),
 
                 TextInput::make('weight')
+                    ->label('Вес')
                     ->required()
                     ->numeric(),
 
                 TextInput::make('temp_max')
+                    ->label('Макс. температура')
                     ->required(),
 
                 TextInput::make('temp_min')
+                    ->label('Мин. температура')
                     ->required(),
 
                 TextInput::make('shelf_life')
+                    ->label('Срок годности')
                     ->required()
                     ->integer(),
 
                 TextInput::make('quantity_big')
+                    ->label('Кол-во больших упаковок')
                     ->integer(),
 
                 TextInput::make('quantity_medium')
+                    ->label('Кол-во средних упаковок')
                     ->integer(),
 
                 TextInput::make('quantity_small')
+                    ->label('Кол-во маленьких упаковок')
                     ->integer(),
 
+                Select::make('categories')
+                    ->label('Категории')
+                    ->relationship('categories', 'title')
+                    ->preload()
+                    ->searchable()
+                    ->multiple(),
+
+                Select::make('tags')
+                    ->label('Теги')
+                    ->relationship('tags', 'title')
+                    ->preload()
+                    ->searchable()
+                    ->multiple(),
+
+                FileUpload::make('photo')
+                    ->label('Фото')
+                    ->image(),
+
                 Placeholder::make('created_at')
-                    ->label('Created Date')
+                    ->label('Создано')
                     ->content(fn(?Product $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
+                    ->label('Изменено')
                     ->content(fn(?Product $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
@@ -68,22 +100,30 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label('Название')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('weight'),
+                TextColumn::make('weight')
+                    ->label('Вес'),
 
-                TextColumn::make('temp_max'),
+                TextColumn::make('temp_max')
+                    ->label('Макс. температура'),
 
-                TextColumn::make('temp_min'),
+                TextColumn::make('temp_min')
+                    ->label('Мин. температура'),
 
-                TextColumn::make('shelf_life'),
+                TextColumn::make('shelf_life')
+                    ->label('Срок годности'),
 
-                TextColumn::make('quantity_big'),
+                TextColumn::make('quantity_big')
+                    ->label('Кол-во больших упаковок'),
 
-                TextColumn::make('quantity_medium'),
+                TextColumn::make('quantity_medium')
+                    ->label('Кол-во средних упаковок'),
 
-                TextColumn::make('quantity_small'),
+                TextColumn::make('quantity_small')
+                    ->label('Кол-во маленьких упаковок'),
             ])
             ->filters([
                 //

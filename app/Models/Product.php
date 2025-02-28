@@ -20,20 +20,25 @@ class Product extends Model
         'text'
     ];
 
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'product_tags');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_products');
+    }
+
+    public function getPhotoUrlAttribute(): string
+    {
+        return asset('storage/'.$this->photo);
+    }
+
     protected function casts(): array
     {
         return [
             'weight' => 'float',
         ];
-    }
-
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductTag::class, 'product_tags');
-    }
-
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(CategoryProduct::class, 'category_products');
     }
 }

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
+
 class SiteController extends Controller
 {
     public function home()
     {
-        return view('home');
+        $news = News::orderBy('created_at', 'desc')->take(10)->get();
+
+        return view('home', compact('news'));
     }
 
     public function about()

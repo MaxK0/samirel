@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\News;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('*', function ($view) {
+            $view->with('last_news', News::orderBy('id', 'desc')->take(5)->get());
+        });
     }
 }

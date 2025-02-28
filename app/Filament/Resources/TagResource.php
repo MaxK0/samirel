@@ -21,6 +21,10 @@ class TagResource extends Resource
 
     protected static ?string $slug = 'tags';
 
+    protected static ?string $navigationLabel = 'Теги товаров';
+    protected static ?string $pluralLabel = 'Теги товаров';
+    protected static ?string $label = 'Теги товаров';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -28,14 +32,15 @@ class TagResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Название')
                     ->required(),
 
                 Placeholder::make('created_at')
-                    ->label('Created Date')
+                    ->label('Создано')
                     ->content(fn(?Tag $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
+                    ->label('Изменено')
                     ->content(fn(?Tag $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
@@ -45,6 +50,7 @@ class TagResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label('Название')
                     ->searchable()
                     ->sortable(),
             ])

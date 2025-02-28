@@ -21,6 +21,11 @@ class CategoryResource extends Resource
 
     protected static ?string $slug = 'categories';
 
+    protected static ?string $navigationLabel = 'Категории товаров';
+    protected static ?string $pluralLabel = 'Категории товаров';
+    protected static ?string $label = 'Категории товаров';
+
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -28,14 +33,15 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
+                    ->label('Название')
                     ->required(),
 
                 Placeholder::make('created_at')
-                    ->label('Created Date')
+                    ->label('Создано')
                     ->content(fn(?Category $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
+                    ->label('Обновлено')
                     ->content(fn(?Category $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
@@ -45,6 +51,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label('Название')
                     ->searchable()
                     ->sortable(),
             ])

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReviewResource\Pages;
 use App\Models\Review;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -21,6 +22,10 @@ class ReviewResource extends Resource
 
     protected static ?string $slug = 'reviews';
 
+    protected static ?string $navigationLabel = 'Обратная связь';
+    protected static ?string $pluralLabel = 'Обратная связь';
+    protected static ?string $label = 'Обратная связь';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -28,23 +33,26 @@ class ReviewResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->label('Имя')
                     ->required(),
 
                 TextInput::make('email')
                     ->required(),
 
                 TextInput::make('theme')
+                    ->label('Темя')
                     ->required(),
 
-                TextInput::make('message')
+                Textarea::make('message')
+                    ->label('Сообщение')
                     ->required(),
 
                 Placeholder::make('created_at')
-                    ->label('Created Date')
+                    ->label('Создано')
                     ->content(fn(?Review $record): string => $record?->created_at?->diffForHumans() ?? '-'),
 
                 Placeholder::make('updated_at')
-                    ->label('Last Modified Date')
+                    ->label('Изменено')
                     ->content(fn(?Review $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
             ]);
     }
@@ -54,6 +62,7 @@ class ReviewResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Имя')
                     ->searchable()
                     ->sortable(),
 
@@ -61,9 +70,11 @@ class ReviewResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('theme'),
+                TextColumn::make('theme')
+                    ->label('Тема'),
 
-                TextColumn::make('message'),
+                TextColumn::make('message')
+                    ->label('Сообщение'),
             ])
             ->filters([
                 //
