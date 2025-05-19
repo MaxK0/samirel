@@ -482,7 +482,7 @@ a {
     flex-wrap: wrap;
 }
 .products__block {
-    width: 24%;
+    width: 23%;
 }
 .products__block img {
     aspect-ratio: 1/1;
