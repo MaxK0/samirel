@@ -24,6 +24,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        $product->load(['categories', 'tags']);
+
         return view('product.show', compact('product'));
     }
 }

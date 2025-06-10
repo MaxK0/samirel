@@ -17,18 +17,21 @@
                         <img src="{{ @asset('/img/logo.svg') }}" alt="logo">
                     </a>
                 </div>
-                <ul class="header__ul">
-                    <li><a href="{{ route('home') }}" class="link-nav {{ request()->routeIs('home') ? 'active' : '' }}">Главная</a>
-                    </li>
-                    <li><a href="{{ route('about') }}"
-                           class="link-nav {{ request()->routeIs('about') ? 'active' : '' }}">О Самирель</a></li>
-                    <li><a href="{{ route('products') }}"
-                           class="link-nav {{ request()->routeIs('products') ? 'active' : '' }}">Каталог</a></li>
-                    <li><a href="{{ route('partners') }}"
-                           class="link-nav {{ request()->routeIs('partners') ? 'active' : '' }}">Партнерам</a></li>
-                    <li><a href="{{ route('news') }}" class="link-nav {{ request()->routeIs('news') ? 'active' : '' }}">Новости</a>
-                    </li>
-                </ul>
+                <button class="burger-menu" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="header__menu-wrapper">
+                    <ul class="header__ul">
+                        <li><a href="{{ route('home') }}" class="link-nav {{ request()->routeIs('home') ? 'active' : '' }}">Главная</a></li>
+                        <li><a href="{{ route('about') }}" class="link-nav {{ request()->routeIs('about') ? 'active' : '' }}">О Самирель</a></li>
+                        <li><a href="{{ route('products') }}" class="link-nav {{ request()->routeIs('products') ? 'active' : '' }}">Каталог</a></li>
+                        <li><a href="{{ route('partners') }}" class="link-nav {{ request()->routeIs('partners') ? 'active' : '' }}">Партнерам</a></li>
+                        <li><a href="{{ route('news') }}" class="link-nav {{ request()->routeIs('news') ? 'active' : '' }}">Новости</a></li>
+                        <li><a href="{{ route('reviews') }}" class="link-nav {{ request()->routeIs('reviews') ? 'active' : '' }}">Обратная связь</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
     </header>
@@ -87,18 +90,18 @@
                                 <li>
                                     <a href="{{ route('products') }}" class="link-nav">Каталог</a>
                                 </li>
-                                <li>
-                                    <a href="#" class="link-nav">Сертификаты Халяль</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="link-nav">Награды</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="link-nav">Галерея</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="link-nav">Документы</a>
-                                </li>
+{{--                                <li>--}}
+{{--                                    <a href="#" class="link-nav">Сертификаты Халяль</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="link-nav">Награды</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="link-nav">Галерея</a>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <a href="#" class="link-nav">Документы</a>--}}
+{{--                                </li>--}}
                                 <li>
                                     <a href="{{ route('reviews') }}" class="link-nav">Обратная связь</a>
                                 </li>
@@ -112,4 +115,38 @@
     </footer>
 </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const burgerMenu = document.getElementById('burger-menu');
+        const menuWrapper = document.querySelector('.header__menu-wrapper');
+
+        burgerMenu.addEventListener('click', function() {
+            this.classList.toggle('active');
+            menuWrapper.classList.toggle('active');
+        });
+
+        // Закрытие меню при клике на ссылку
+        const menuLinks = document.querySelectorAll('.header__ul a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                burgerMenu.classList.remove('active');
+                menuWrapper.classList.remove('active');
+            });
+        });
+
+        // Анимация бургера при клике
+        burgerMenu.addEventListener('click', function() {
+            const spans = this.querySelectorAll('span');
+            if (this.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    });
+</script>
 </html>

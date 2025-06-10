@@ -8,7 +8,9 @@
                     <div class="news__block">
                         <img src="{{ @asset($new->photo_url) }}" alt="Новость">
                         <div class="news__content">
-                            <h5>{{ $new->title }}</h5>
+                            <a class="link-content" href="{{ route('news.show', $new) }}">
+                                <h5>{{ $new->title }}</h5>
+                            </a>
                             <p class="news__content-desc">{{ $new->title_desc }}</p>
                             <p class="news__content-date">{{ $new->formatted_date }}</p>
                         </div>

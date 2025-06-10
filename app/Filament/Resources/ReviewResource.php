@@ -40,7 +40,7 @@ class ReviewResource extends Resource
                     ->required(),
 
                 TextInput::make('theme')
-                    ->label('Темя')
+                    ->label('Тема')
                     ->required(),
 
                 Textarea::make('message')
