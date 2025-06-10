@@ -43,7 +43,7 @@ class NewsResource extends Resource
                     ->label('Дата'),
 
                 Textarea::make('description')
-                    ->label('Описание'),
+                    ->label('Краткое описание'),
 
                 Textarea::make('title_desc')
                     ->label('Основное описание'),
